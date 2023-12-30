@@ -40,7 +40,7 @@ const create = z.object({
       .min(10)
       .max(11),
     address: z.string({}).optional(),
-    profilePic: z.string().optional(),
+    profileImg: z.string().optional(),
   }),
 });
 
