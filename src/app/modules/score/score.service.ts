@@ -4,7 +4,7 @@ import prisma from '../../../shared/prisma';
 // get quiz by category
 const startQuizByCategory = async (): Promise<Score[]> => {
   const result = await prisma.score.findMany({
-    include: { quiz: true, user: true },
+    include: { user: true },
   });
 
   return result;
