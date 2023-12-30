@@ -44,8 +44,39 @@ const getCategoryById: RequestHandler = catchAsync(
   }
 );
 
+// update category
+const updateCategory: RequestHandler = catchAsync(
+  async (req: Request, res: Response) => {
+    const result = await CategoryService.updateCategory(
+      req.params.id,
+      req.body
+    );
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Category updated successfully',
+      data: result,
+    });
+  }
+);
+
+// delete category
+const deleteCategory: RequestHandler = catchAsync(
+  async (req: Request, res: Response) => {
+    const result = await CategoryService.deleteCategory(req.params.id);
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Category deleted successfully',
+      data: result,
+    });
+  }
+);
+
 export const CategoryController = {
   createCategory,
   getAllCategory,
   getCategoryById,
+  updateCategory,
+  deleteCategory,
 };

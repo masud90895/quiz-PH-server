@@ -28,8 +28,32 @@ const getCategoryById = async (id: string): Promise<Quiz[]> => {
   return result;
 };
 
+// update category
+const updateCategory = async (
+  id: string,
+  payload: Category
+): Promise<Category> => {
+  const result = await prisma.category.update({
+    where: { id },
+    data: payload,
+  });
+
+  return result;
+};
+
+// delete category
+const deleteCategory = async (id: string): Promise<Category> => {
+  const result = await prisma.category.delete({
+    where: { id },
+  });
+
+  return result;
+};
+
 export const CategoryService = {
   createCategory,
   getAllCategory,
   getCategoryById,
+  updateCategory,
+  deleteCategory,
 };
