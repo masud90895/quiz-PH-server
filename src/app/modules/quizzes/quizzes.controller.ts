@@ -70,59 +70,6 @@ const deleteQuiz: RequestHandler = catchAsync(
   }
 );
 
-// create quiz questions
-const createQuizQuestions: RequestHandler = catchAsync(
-  async (req: Request, res: Response) => {
-    const result = await QuizService.createQuizQuestions(req.body);
-    sendResponse(res, {
-      statusCode: httpStatus.OK,
-      success: true,
-      message: 'Quiz questions created successfully',
-      data: result,
-    });
-  }
-);
-//  update quiz questions
-const updateQuizQuestions: RequestHandler = catchAsync(
-  async (req: Request, res: Response) => {
-    const result = await QuizService.updateQuizQuestions(
-      req.params.questionId,
-      req.body
-    );
-    sendResponse(res, {
-      statusCode: httpStatus.OK,
-      success: true,
-      message: 'Quiz questions updated successfully',
-      data: result,
-    });
-  }
-);
-
-// get last quiz questions
-const getLastQuizQuestions: RequestHandler = catchAsync(
-  async (req: Request, res: Response) => {
-    const result = await QuizService.getLastQuizQuestions(req.params.quizId);
-    sendResponse(res, {
-      statusCode: httpStatus.OK,
-      success: true,
-      message: 'Quiz questions fetched successfully',
-      data: result,
-    });
-  }
-);
-
-// get question by id
-const getQuestion: RequestHandler = catchAsync(
-  async (req: Request, res: Response) => {
-    const result = await QuizService.getQuestion(req.params.questionId);
-    sendResponse(res, {
-      statusCode: httpStatus.OK,
-      success: true,
-      message: 'Quiz questions fetched successfully',
-      data: result,
-    });
-  }
-);
 
 export const QuizController = {
   createQuiz,
@@ -130,8 +77,4 @@ export const QuizController = {
   getQuizById,
   updateQuiz,
   deleteQuiz,
-  createQuizQuestions,
-  updateQuizQuestions,
-  getLastQuizQuestions,
-  getQuestion,
 };

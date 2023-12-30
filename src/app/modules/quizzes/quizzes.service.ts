@@ -1,5 +1,4 @@
-import { Prisma, Questions, Quiz } from '@prisma/client';
-import { shuffleArray } from '../../../helpers/shuffleArray';
+import { Prisma, Quiz } from '@prisma/client';
 import prisma from '../../../shared/prisma';
 
 // create quiz
@@ -10,6 +9,7 @@ const createQuiz = async (payload: Prisma.QuizCreateInput): Promise<Quiz> => {
   });
   return result;
 };
+
 //  get all quiz
 const getAllQuiz = async (): Promise<Quiz[]> => {
   const result = await prisma.quiz.findMany({
@@ -23,7 +23,7 @@ const getAllQuiz = async (): Promise<Quiz[]> => {
 };
 
 // get quiz by id
-const getQuizById = async (id: string): Promise<Quiz | null> => {
+const getQuizById = async (id: string): Promise<Quiz> => {
   const result = await prisma.quiz.findUnique({
     where: { id },
     include: {
@@ -32,20 +32,7 @@ const getQuizById = async (id: string): Promise<Quiz | null> => {
       questions: true,
     },
   });
-
-  if (result) {
-    // Shuffle order of questions
-    shuffleArray(result.questions);
-
-    // Shuffle options for each question
-    result.questions.forEach(question => {
-      shuffleArray(question.options);
-    });
-  }
-
-  console.log(result, 'result');
-
-  return result;
+  return result as Quiz;
 };
 
 //  update quiz
@@ -68,53 +55,10 @@ const deleteQuiz = async (id: string): Promise<Quiz> => {
   return result;
 };
 
-// create quiz questions
-const createQuizQuestions = async (
-  payload: Prisma.QuestionsCreateInput
-): Promise<Questions> => {
-  const result = await prisma.questions.create({
-    data: payload,
-  });
-  return result;
-};
-
-// update quiz questions
-const updateQuizQuestions = async (
-  id: string,
-  payload: Prisma.QuizUpdateInput
-): Promise<Questions> => {
-  const result = await prisma.questions.update({
-    where: { id },
-    data: payload,
-  });
-  return result;
-};
-
-// get last quiz questions
-const getLastQuizQuestions = async (id: string): Promise<Questions[]> => {
-  const result = await prisma.questions.findMany({
-    where: { quizId: id },
-    include: {
-      quiz: true,
-    },
-  });
-  return result;
-};
-
-// get question by id
-const getQuestion = async (id: string): Promise<Questions | null> => {
-  const result = await prisma.questions.findUnique({ where: { id } });
-  return result;
-};
-
 export const QuizService = {
   createQuiz,
   getAllQuiz,
-  getQuizById,
   updateQuiz,
   deleteQuiz,
-  createQuizQuestions,
-  updateQuizQuestions,
-  getLastQuizQuestions,
-  getQuestion,
+  getQuizById,
 };

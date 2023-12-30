@@ -1,4 +1,4 @@
-import { Category, Quiz } from '@prisma/client';
+import { Category } from '@prisma/client';
 import prisma from '../../../shared/prisma';
 
 // create category
@@ -10,22 +10,20 @@ const createCategory = async (payload: Category): Promise<Category> => {
 
 // export all category
 const getAllCategory = async (): Promise<Category[]> => {
-  const result = await prisma.category.findMany();
+  const result = await prisma.category.findMany({ include: { quiz: true } });
 
   return result;
 };
 
 //  category by id
-const getCategoryById = async (id: string): Promise<Quiz[]> => {
-  const result = await prisma.quiz.findMany({
-    where: { categoryId: id },
+const getCategoryById = async (id: string): Promise<Category> => {
+  const result = await prisma.category.findUnique({
+    where: { id },
     include: {
-      createdBy: true,
-      category: true,
-      questions: true,
+      quiz: true,
     },
   });
-  return result;
+  return result as Category;
 };
 
 // update category
