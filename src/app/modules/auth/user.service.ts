@@ -21,9 +21,9 @@ const registerUser = async (user: User): Promise<ISingUpUserResponse> => {
 
   const newUser = await prisma.user.create({ data: user });
 
-  const { id: userId, role } = newUser;
+  const { id: userId, role, name, email } = newUser;
   const accessToken = jwtHelpers.createToken(
-    { userId, role },
+    { userId, role, name, email },
     config.jwt.secret as Secret,
     config.jwt.expires_in as string
   );
@@ -66,9 +66,9 @@ const loginUser = async (payload: { email: string; password: string }) => {
 
   //create access token & refresh token
 
-  const { id: userId, role } = isUserExist;
+  const { id: userId, role, name } = isUserExist;
   const accessToken = jwtHelpers.createToken(
-    { userId, role },
+    { userId, role, name, email },
     config.jwt.secret as Secret,
     config.jwt.expires_in as string
   );
