@@ -1,16 +1,18 @@
 import express from 'express';
 import { ENUM_USER_ROLE } from '../../../enums/user';
 import auth from '../../middlewares/auth';
-import { QuizTakingController } from './score.controller';
+import { ScoreController } from './score.controller';
 
 const router = express.Router();
 
-router.get('/', QuizTakingController.startQuizByCategory);
-router.get('/userId', QuizTakingController.getScores);
+// create quiz Score
 router.post(
   '/',
   auth(ENUM_USER_ROLE.PERFORMER, ENUM_USER_ROLE.ADMIN),
-  QuizTakingController.submitQuiz
+  ScoreController.createScore
 );
+// get all quiz score
+router.get('/', ScoreController.allScore);
+router.get('/:userId', ScoreController.getScores);
 
-export const QuizTakingRout = router;
+export const QuizScore = router;

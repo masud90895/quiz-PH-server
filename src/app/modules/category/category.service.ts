@@ -10,7 +10,16 @@ const createCategory = async (payload: Category): Promise<Category> => {
 
 // export all category
 const getAllCategory = async (): Promise<Category[]> => {
-  const result = await prisma.category.findMany({ include: { quiz: true } });
+  const result = await prisma.category.findMany({
+    include: {
+      quiz: {
+        include: {
+          questions: true,
+          createdBy: true,
+        },
+      },
+    },
+  });
 
   return result;
 };
@@ -20,7 +29,12 @@ const getCategoryById = async (id: string): Promise<Category> => {
   const result = await prisma.category.findUnique({
     where: { id },
     include: {
-      quiz: true,
+      quiz: {
+        include: {
+          questions: true,
+          createdBy: true,
+        },
+      },
     },
   });
   return result as Category;
