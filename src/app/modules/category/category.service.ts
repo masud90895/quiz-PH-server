@@ -24,6 +24,21 @@ const getAllCategory = async (): Promise<Category[]> => {
   return result;
 };
 
+// export all category for dropdown
+const getAllCategoryForDropdown = async (): Promise<Category[]> => {
+  const result = await prisma.category.findMany({
+    select: {
+      id: true,
+      name: true,
+    },
+  });
+
+  return result;
+};
+
+
+
+
 //  category by id
 const getCategoryById = async (id: string): Promise<Category> => {
   const result = await prisma.category.findUnique({
@@ -68,4 +83,5 @@ export const CategoryService = {
   getCategoryById,
   updateCategory,
   deleteCategory,
+  getAllCategoryForDropdown,
 };

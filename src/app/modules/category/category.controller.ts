@@ -18,6 +18,19 @@ const createCategory: RequestHandler = catchAsync(
   }
 );
 
+// get all category for dropdown
+const getAllCategoryForDropdown: RequestHandler = catchAsync(
+  async (req: Request, res: Response) => {
+    const result = await CategoryService.getAllCategoryForDropdown();
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Get all category successfully',
+      data: result,
+    });
+  }
+);
+
 // get all category
 const getAllCategory: RequestHandler = catchAsync(
   async (req: Request, res: Response) => {
@@ -79,4 +92,6 @@ export const CategoryController = {
   getCategoryById,
   updateCategory,
   deleteCategory,
+  getAllCategoryForDropdown,
 };
+

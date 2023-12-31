@@ -7,6 +7,8 @@ const router = express.Router();
 router.post('/', CategoryController.createCategory);
 // get all category
 router.get('/', CategoryController.getAllCategory);
+// get all category for dropdown
+router.get('/dropdown', CategoryController.getAllCategoryForDropdown);
 // category by id
 router.get('/:id', CategoryController.getCategoryById);
 // update category
