@@ -10,7 +10,9 @@ const createQuestions = async (payload: Questions): Promise<Questions> => {
 
 // get all questions
 const getAllQuestions = async (): Promise<Questions[]> => {
-  const result = await prisma.questions.findMany();
+  const result = await prisma.questions.findMany({
+    include: { quiz: true },
+  });
   return result;
 };
 
