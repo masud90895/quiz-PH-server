@@ -12,7 +12,10 @@ const createScore = async (answers: Score): Promise<Score> => {
 // get quiz by category
 const startQuizByCategory = async (): Promise<Score[]> => {
   const result = await prisma.score.findMany({
-    include: { user: true },
+    include: {
+      user: true,
+      quiz: true,
+    },
   });
 
   return result;

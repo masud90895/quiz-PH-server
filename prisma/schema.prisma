@@ -46,6 +46,7 @@ model Quiz {
   categoryId  String?
   questions   Questions[]
 
+  score       Score[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -78,5 +79,6 @@ model Score {
   user   User   @relation(fields: [userId], references: [id])
   userId String
  
+  quiz   Quiz   @relation(fields: [quizId], references: [id])
   quizId String
 }
