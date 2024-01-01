@@ -10,7 +10,7 @@ const app: Application = express();
 
 app.use(
   cors({
-    origin: ['http://localhost:3000', 'https://quiz-ph-server.vercel.app'],
+    origin: ['http://localhost:3000', 'https://quiz-manager-ph.vercel.app'],
     credentials: true,
   })
 );
